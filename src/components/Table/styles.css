@@ -1,0 +1,129 @@
+.xl {
+  width: 30%;
+}
+
+.xm {
+  width: 15%;
+}
+
+.x-s {
+  width: 10%;
+}
+
+.tableHeader {
+  display: flex;
+  margin-bottom: .5em;
+  padding: 0.5em;
+}
+
+.tableHeader__description {
+  text-align: left;
+}
+
+.tableHeader__cantidad {
+  text-align: center;
+}
+
+.tableHeader__unidades {
+  text-align: center;
+}
+
+.tableHeader__precio {
+  text-align: center;
+}
+
+.tableHeader__total {
+  text-align: right;
+}
+
+.tableHeader__acciones {
+  text-align: center;
+}
+
+.tableRow {
+  display: flex;
+  padding: 1em 0.5em;
+  color: black;
+  transition: .3s;
+  align-items: center;
+}
+
+.tableRow:nth-child(even) {
+  background: #F5F5F5;
+}
+
+.tableRow:nth-child(odd) {
+  background: #FFF;
+}
+
+.tableRow:nth-child(even):hover,
+.tableRow:nth-child(odd):hover {
+  background: #3F51B5;
+  color: white;
+}
+
+.tableRow__descripcion {
+  text-align: left;
+}
+
+.tableRow__cantidad {
+  text-align: center;
+  padding-right: .5em;
+}
+
+.tableRow__unidades {
+  text-align: center;
+  padding-right: .5em;
+}
+
+.tableRow__precio {
+  text-align: center;
+}
+
+.tableRow__total{
+  display: flex;
+  justify-content: space-between;
+}
+
+.tableRow__acciones {
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.tableRow__acciones__img {
+  cursor: pointer;
+}
+
+.tableFooter {
+  border-top: 2px solid #757575;
+}
+
+.tableFooter__row {
+  display: flex;
+}
+
+.tableFooter__row:nth-child(even) {
+  background: #F5F5F5;
+}
+
+.tableFooter__row:nth-child(odd) {
+  background: #FFF;
+}
+
+.tableFooter__row:nth-child(3) {
+  border-top: 2px solid #BDBDBD;
+}
+
+.tableFooter__row--title {
+  width: 72.5%;
+  text-align: right;
+  padding: 1em 0.5em;
+}
+
+.tableFooter__row--desc {
+  width: 15%;
+  padding: 1em 0.5em;
+  display: flex;
+  justify-content: space-between;
+}
