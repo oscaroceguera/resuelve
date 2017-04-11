@@ -9,16 +9,7 @@ const styles = {
   margin: '0 auto'
 }
 
-const data = [
-  {descripcion: 'Control Xbox', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'},
-  {descripcion: 'Control Xbox', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'},
-  {descripcion: 'Control Xbox', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'},
-  {descripcion: 'Control Xbox', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'},
-  {descripcion: 'Control Xbox', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'},
-  {descripcion: 'Control Xbox', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'}
-]
-
-const Table = () => (
+const Table = ({data}) => (
   <div style={styles}>
     <TableHeader />
     {
@@ -27,5 +18,9 @@ const Table = () => (
     <TableFooter />
   </div>
 )
+
+Table.propTypes = {
+  data: React.PropTypes.array.isRequired
+}
 
 export default Table
