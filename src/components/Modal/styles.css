@@ -1,0 +1,45 @@
+.modal__title {
+  color: #00d1b2;
+  font-weight: normal;
+  text-align: center;
+}
+
+.modal__form {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+.modal__form--input {
+  width: 300px;
+  padding: .5em;
+  margin-bottom: 1em;
+  font-size: 16px;
+}
+
+.modal__form--input:focus {
+  outline-color: #00d1b2;
+}
+
+.modal__agregar {
+  text-align: center;
+  padding: 1em;
+}
+
+.modal__agregar--btn {
+  padding: 1em 2em;
+  cursor: pointer;
+  background: #00d1b2;
+  border: 0;
+  border-radius: 2px;
+  color: white;
+  font-size: 12px;
+  outline: 0;
+}
+
+.modal__agregar--btn:hover {
+  box-shadow: 0px 0px 5px grey;
+}
