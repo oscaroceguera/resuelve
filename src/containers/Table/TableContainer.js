@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router'
 
+
 import Wrapper from '../../components/commons/Wrapper'
 import Header from '../../components/Header/Header'
 import Table from '../../components/Table/Table'
+import Modal from '../../components/Modal/Modal'
 
 const data = [
   {descripcion: 'Control Xbox', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'},
@@ -15,16 +17,37 @@ const data = [
 ]
 
 class TableContainer extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      modalOpen: false
+    }
+  }
+
+  closeModal = (e) => {
+    return this.setState({
+      modalOpen: false
+    })
+  }
+
+  openModal = (e) => {
+    return this.setState({
+      modalOpen: true
+    })
+  }
+
   render () {
     return (
       <div>
-        {/* Back to home */}
         <Link to='/'>{'Home'}</Link>
-
         <Wrapper>
-          <Header />
+          <Header openModal={this.openModal}/>
           <Table data={data}/>
         </Wrapper>
+        <Modal
+          modalOpen={this.state.modalOpen}
+          closeModal={this.closeModal}
+        />
       </div>
     )
   }
