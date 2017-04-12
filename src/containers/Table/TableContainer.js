@@ -69,16 +69,30 @@ class TableContainer extends Component {
     this.setState(newState)
   }
 
+  deleteConcepto = (index) => (e) => {
+    e.preventDefault()
+
+    const { conceptos } = this.state
+
+    this.setState({
+      conceptos: [...conceptos.slice(0, index), ...conceptos.slice(index + 1)]
+    })
+  }
+
   render () {
+    const { conceptos, modalOpen} = this.state
     return (
       <div>
         <Link to='/'>{'Home'}</Link>
         <Wrapper>
           <Header openModal={this.openModal}/>
-          <Table data={this.state.conceptos}/>
+          <Table
+            data={conceptos}
+            deleteConcepto={this.deleteConcepto}
+          />
         </Wrapper>
         <Modal
-          modalOpen={this.state.modalOpen}
+          modalOpen={modalOpen}
           closeModal={this.closeModal}
           handleChange={this.handleChange}
           addConcepto={this.addConcepto}

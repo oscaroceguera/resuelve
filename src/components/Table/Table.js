@@ -10,20 +10,21 @@ const styles = {
   margin: '0 auto'
 }
 
-const Table = ({data}) => (
+const Table = ({data, deleteConcepto}) => (
   <div style={styles}>
     <TableHeader />
     {
       data.length === 0
         ? <TableRowDefault />
-        : data.map((item, key) => <TableRow key={key} item={item} />)
+        : data.map((item, key) => <TableRow key={key} index={key} item={item} deleteConcepto={deleteConcepto}/>)
     }
     <TableFooter data={data}/>
   </div>
 )
 
 Table.propTypes = {
-  data: React.PropTypes.array.isRequired
+  data: React.PropTypes.array.isRequired,
+  deleteConcepto: React.PropTypes.func.isRequired
 }
 
 export default Table
