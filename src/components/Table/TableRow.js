@@ -1,5 +1,5 @@
 import React from 'react'
-import AddIcon from '../../svg/add.svg'
+import UpdateIcon from '../../svg/update.svg'
 import DeleteIcon from '../../svg/delete.svg'
 import './styles.css'
 
@@ -14,7 +14,7 @@ const TableRow = ({item, deleteConcepto, index}) => (
         <div>{item.total}</div>
       </div>
       <div className='tableRow__acciones x-s'>
-        <img className='tableRow__acciones__img' src={AddIcon} alt='plus'/>
+        <img className='tableRow__acciones__img' src={UpdateIcon} alt='update'/>
         <img onClick={deleteConcepto(index)} className='tableRow__acciones__img' src={DeleteIcon} alt='del'/>
       </div>
     </div>
