@@ -40,6 +40,15 @@
   text-align: center;
 }
 
+.tableRowDefault {
+  display: flex;
+  padding: 1em 0.5em;
+  color: #BDBDBD;
+  transition: .3s;
+  align-items: center;
+  background: #F5F5F5;
+}
+
 .tableRow {
   display: flex;
   padding: 1em 0.5em;
