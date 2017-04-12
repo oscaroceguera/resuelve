@@ -1,0 +1,21 @@
+.btnContainer {
+  text-align: left;
+  padding: 1em;
+  display: flex;
+}
+
+.btnContainer__btn {
+  margin: 1em;
+  color: #00d1b2;
+  border: 1px solid #00d1b2;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: .3s;
+  background: none;
+  display: flex;
+  align-items: center;
+}
+
+.btnContainer__btn:hover {
+  box-shadow: 0px 0px 5px grey;
+}
