@@ -8,7 +8,7 @@ const TableRow = ({item}) => (
       <div className='tableRow__descripcion xl'>{item.descripcion}</div>
       <div className='tableRow__cantidad xm'>{item.cantidad}</div>
       <div className='tableRow__unidades xm'>{item.unidades}</div>
-      <div className='tableRow__precio xm'>$ {item.precio}</div>
+      <div className='tableRow__precio xm'>$ {item.precioUnit}</div>
       <div className='tableRow__total xm'>
         <div>{'$'}</div>
         <div>{item.total}</div>
