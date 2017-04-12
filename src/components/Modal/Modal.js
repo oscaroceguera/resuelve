@@ -14,7 +14,7 @@ const modalStyles = {
   }
 }
 
-const Modal = ({modalOpen, closeModal}) => (
+const Modal = ({modalOpen, closeModal, handleChange, addConcepto}) => (
   <ReactModal
     style={modalStyles}
     isOpen={modalOpen}
@@ -22,20 +22,22 @@ const Modal = ({modalOpen, closeModal}) => (
     contentLabel='Agregar concepto'>
     <h1 className='modal__title'>{'Agregar concepto'}</h1>
     <div className='modal__form'>
-      <input className='modal__form--input' placeholder='Descripción' />
-      <input className='modal__form--input' placeholder='Cantidad' />
-      <input className='modal__form--input' placeholder='Unidades' />
-      <input className='modal__form--input' placeholder='Precio unitario' />
+      <input name='descripcion' onChange={handleChange} className='modal__form--input' placeholder='Descripción' />
+      <input name='cantidad' onChange={handleChange} className='modal__form--input' placeholder='Cantidad' />
+      <input name='unidades' onChange={handleChange} className='modal__form--input' placeholder='Unidades' />
+      <input name='precioUnit' onChange={handleChange} className='modal__form--input' placeholder='Precio unitario' />
     </div>
     <div className='modal__agregar'>
-      <button className='modal__agregar--btn'>Agregar</button>
+      <button onClick={addConcepto} className='modal__agregar--btn'>Agregar</button>
     </div>
   </ReactModal>
 )
 
 Modal.propTypes = {
   modalOpen: React.PropTypes.bool.isRequired,
-  closeModal: React.PropTypes.func.isRequired
+  closeModal: React.PropTypes.func.isRequired,
+  handleChange: React.PropTypes.func.isRequired,
+  addConcepto: React.PropTypes.func.isRequired
 }
 
 export default Modal
