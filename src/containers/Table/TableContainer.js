@@ -5,6 +5,7 @@ import Wrapper from '../../components/commons/Wrapper'
 import Header from '../../components/Header/Header'
 import Table from '../../components/Table/Table'
 import Modal from '../../components/Modal/Modal'
+import ExtraButtons from '../../components/ExtraButtons/ExtraButtons'
 
 class TableContainer extends Component {
   constructor (props) {
@@ -79,6 +80,23 @@ class TableContainer extends Component {
     })
   }
 
+  consoleLog = (e) => {
+    console.log(this.state.conceptos)
+  }
+
+  clearState = (e) => {
+    this.setState({
+      modalOpen: false,
+      currentConcepto: {
+        descripcion: '',
+        cantidad: 0,
+        unidades: 0,
+        precioUnit: 0
+      },
+      conceptos: []
+    })
+  }
+
   render () {
     const { conceptos, modalOpen} = this.state
     return (
@@ -90,6 +108,10 @@ class TableContainer extends Component {
             data={conceptos}
             deleteConcepto={this.deleteConcepto}
           />
+        <ExtraButtons
+          print={this.consoleLog}
+          clear={this.clearState}
+        />
         </Wrapper>
         <Modal
           modalOpen={modalOpen}
