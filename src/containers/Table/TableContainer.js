@@ -1,26 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router'
 
-
 import Wrapper from '../../components/commons/Wrapper'
 import Header from '../../components/Header/Header'
 import Table from '../../components/Table/Table'
 import Modal from '../../components/Modal/Modal'
 
-const data = [
-  {descripcion: 'Control Xbox', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'},
-  {descripcion: 'Falcor is a social network might allow the script accordingly. ', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'},
-  {descripcion: 'Rnpm is a framework based on data. Web browser. Observer Pattern is a JavaScript library that a feature detection library, useful to the server via Ajax', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'},
-  {descripcion: 'Control Xbox', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'},
-  {descripcion: 'Control Xbox', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'},
-  {descripcion: 'Control Xbox', cantidad: 1, unidades: 12, precio: '999.00', total: '999.00'}
-]
-
 class TableContainer extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      modalOpen: false
+      modalOpen: false,
+      currentConcepto: {
+        descripcion: '',
+        cantidad: 0,
+        unidades: 0,
+        precioUnit: 0
+      },
+      conceptos: []
     }
   }
 
@@ -36,17 +33,55 @@ class TableContainer extends Component {
     })
   }
 
+  handleChange = (e) => {
+    const { currentConcepto } = this.state
+    const inputName = e.target.name
+    let value = e.target.value
+
+    if (inputName === 'precioUnit') {
+      value = parseFloat(value)
+      value = value.toFixed(2)
+    }
+
+    currentConcepto[inputName] = value
+
+    return this.setState(currentConcepto)
+  }
+
+  addConcepto = (e) => {
+    const newState = Object.assign({}, this.state)
+    const _currentConcepto = this.state.currentConcepto
+    const _total = _currentConcepto.cantidad * _currentConcepto.precioUnit
+
+    _currentConcepto.total = _total.toFixed(2)
+
+    newState.conceptos.push(_currentConcepto)
+    newState.modalOpen = false
+
+    // inital state for currentConcepto
+    newState.currentConcepto = {
+      descripcion: '',
+      cantidad: 0,
+      unidades: 0,
+      precioUnit: 0
+    }
+
+    this.setState(newState)
+  }
+
   render () {
     return (
       <div>
         <Link to='/'>{'Home'}</Link>
         <Wrapper>
           <Header openModal={this.openModal}/>
-          <Table data={data}/>
+          <Table data={this.state.conceptos}/>
         </Wrapper>
         <Modal
           modalOpen={this.state.modalOpen}
           closeModal={this.closeModal}
+          handleChange={this.handleChange}
+          addConcepto={this.addConcepto}
         />
       </div>
     )
