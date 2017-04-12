@@ -2,6 +2,7 @@ import React from 'react'
 
 import TableHeader from './TableHeader'
 import TableRow from './TableRow'
+import TableRowDefault from './TableRowDefault'
 import TableFooter from './TableFooter'
 
 const styles = {
@@ -13,9 +14,11 @@ const Table = ({data}) => (
   <div style={styles}>
     <TableHeader />
     {
-      data.map((item, key) => <TableRow key={key} item={item} />)
+      data.length === 0
+        ? <TableRowDefault />
+        : data.map((item, key) => <TableRow key={key} item={item} />)
     }
-    <TableFooter />
+    <TableFooter data={data}/>
   </div>
 )
 
