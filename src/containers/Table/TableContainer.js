@@ -11,12 +11,13 @@ class TableContainer extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      isUpdate: false,
       modalOpen: false,
       currentConcepto: {
         descripcion: '',
-        cantidad: 0,
-        unidades: 0,
-        precioUnit: 0
+        cantidad: '',
+        unidades: '',
+        precioUnit: ''
       },
       conceptos: []
     }
@@ -39,17 +40,12 @@ class TableContainer extends Component {
     const inputName = e.target.name
     let value = e.target.value
 
-    if (inputName === 'precioUnit') {
-      value = parseFloat(value)
-      value = value.toFixed(2)
-    }
-
     currentConcepto[inputName] = value
 
     return this.setState(currentConcepto)
   }
 
-  addConcepto = (e) => {
+  saveConcepto () {
     const newState = Object.assign({}, this.state)
     const _currentConcepto = this.state.currentConcepto
     const _total = _currentConcepto.cantidad * _currentConcepto.precioUnit
@@ -62,12 +58,46 @@ class TableContainer extends Component {
     // inital state for currentConcepto
     newState.currentConcepto = {
       descripcion: '',
-      cantidad: 0,
-      unidades: 0,
-      precioUnit: 0
+      cantidad: '',
+      unidades: '',
+      precioUnit: ''
     }
 
     this.setState(newState)
+  }
+  updateConcepto () {
+    const newConceptos = Object.assign([], this.state.conceptos, {
+      [this.state.updateCurrentIndex]: {
+        descripcion: this.state.currentConcepto.descripcion,
+        cantidad: this.state.currentConcepto.cantidad,
+        unidades: this.state.currentConcepto.unidades,
+        precioUnit: this.state.currentConcepto.precioUnit,
+        total: (this.state.currentConcepto.cantidad * this.state.currentConcepto.precioUnit).toFixed(2)
+      }
+    })
+
+    const obj = {
+      isUpdate: false,
+      modalOpen: false,
+      conceptos: newConceptos,
+      currentConcepto: {
+        descripcion: '',
+        cantidad: '',
+        unidades: '',
+        precioUnit: ''
+      }
+    }
+    this.setState(obj)
+  }
+
+  addConcepto = (e) => {
+    e.preventDefault()
+
+    if (this.state.isUpdate) {
+      return this.updateConcepto()
+    }
+
+    this.saveConcepto()
   }
 
   deleteConcepto = (index) => (e) => {
@@ -86,6 +116,7 @@ class TableContainer extends Component {
 
   clearState = (e) => {
     this.setState({
+      isUpdate: false,
       modalOpen: false,
       currentConcepto: {
         descripcion: '',
@@ -97,8 +128,18 @@ class TableContainer extends Component {
     })
   }
 
+  handleUpdateConcepto = (index) => (e) => {
+    e.preventDefault()
+    this.setState({
+      updateCurrentIndex: index,
+      isUpdate: true,
+      currentConcepto: this.state.conceptos[index],
+      modalOpen: true
+    })
+  }
+
   render () {
-    const { conceptos, modalOpen} = this.state
+    const { conceptos, modalOpen, currentConcepto} = this.state
     return (
       <div>
         <Link to='/'>{'Home'}</Link>
@@ -107,6 +148,7 @@ class TableContainer extends Component {
           <Table
             data={conceptos}
             deleteConcepto={this.deleteConcepto}
+            onUpdateConcepto={this.handleUpdateConcepto}
           />
         <ExtraButtons
           print={this.consoleLog}
@@ -114,6 +156,7 @@ class TableContainer extends Component {
         />
         </Wrapper>
         <Modal
+          currentConcepto={currentConcepto}
           modalOpen={modalOpen}
           closeModal={this.closeModal}
           handleChange={this.handleChange}
