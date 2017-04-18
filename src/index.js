@@ -1,22 +1,34 @@
 // Our dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { browserHistory, Router, Route, IndexRoute } from 'react-router'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import { Provider } from 'react-redux'
+import { routerReducer, syncHistoryWithStore } from 'react-router-redux'
+import { browserHistory } from 'react-router'
+import thunk from 'redux-thunk'
 
-// Load containers
-import App from './containers/App/App';
-import HomeContainer from './containers/Home/HomeContainer';
-import TableContainer from './containers/Table/TableContainer';
+import * as reducers from './reducers'
+import getRoutes from './routes'
 
 import './index.css';
 
+const store = createStore(
+  combineReducers({
+    ...reducers,
+    routing: routerReducer
+  }),
+  compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : (f) => f
+  )
+)
+
+const history = syncHistoryWithStore(browserHistory, store)
+
 // Routes config
 ReactDOM.render(
-  <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute component={HomeContainer} />
-      <Route path="tabla" component={TableContainer} />
-    </Route>
-  </Router>,
+  <Provider store={store}>
+    {getRoutes(history)}
+  </Provider>,
   document.getElementById('root')
 );
