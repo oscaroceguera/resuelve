@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import * as Actions from '../../reducers/tableReducer'
-
+import {showSubmit} from '../../selectors/SlectorTable'
 import Wrapper from '../../components/commons/Wrapper'
 import Header from '../../components/Header/Header'
 import Table from '../../components/Table/Table'
@@ -56,7 +56,7 @@ class TableContainer extends Component {
   }
 
   render () {
-    const { modalOpen, conceptos, currentConcepto } = this.props
+    const { modalOpen, conceptos, currentConcepto, showSubmit } = this.props
     return (
       <div>
         <Link to='/'>{'Home'}</Link>
@@ -78,6 +78,7 @@ class TableContainer extends Component {
           closeModal={this.closeModal}
           handleChange={this.handleChange}
           addConcepto={this.onSaved}
+          showSubmit={showSubmit}
         />
       </div>
     )
@@ -91,6 +92,7 @@ const mapStateToProps = (state) =>  {
     conceptos: tableJS.conceptos,
     currentConcepto: tableJS.currentConcepto,
     isUpdate: tableJS.isUpdate,
+    showSubmit: showSubmit(state)
   }
 }
 

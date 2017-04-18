@@ -14,7 +14,7 @@ const modalStyles = {
   }
 }
 
-const Modal = ({modalOpen, closeModal, handleChange, addConcepto, currentConcepto}) => (
+const Modal = ({modalOpen, closeModal, handleChange, addConcepto, currentConcepto, showSubmit}) => (
   <ReactModal
     style={modalStyles}
     isOpen={modalOpen}
@@ -28,7 +28,12 @@ const Modal = ({modalOpen, closeModal, handleChange, addConcepto, currentConcept
       <input value={currentConcepto.precioUnit} name='precioUnit' onChange={handleChange} className='modal__form--input' placeholder='Precio unitario' />
     </div>
     <div className='modal__agregar'>
-      <button onClick={addConcepto} className='modal__agregar--btn'>Agregar</button>
+      <button
+        className={showSubmit ? 'modal__agregar--btn' : 'modal__agregar--disabled'}
+        onClick={showSubmit ? addConcepto : null}
+      >
+        {'Agregar'}
+      </button>
     </div>
   </ReactModal>
 )
@@ -39,6 +44,7 @@ Modal.propTypes = {
   handleChange: React.PropTypes.func.isRequired,
   addConcepto: React.PropTypes.func.isRequired,
   currentConcepto: React.PropTypes.object.isRequired,
+  showSubmit: React.PropTypes.bool.isRequired
 }
 
 export default Modal

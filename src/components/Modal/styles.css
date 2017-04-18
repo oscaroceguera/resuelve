@@ -24,10 +24,6 @@
   outline-color: #00d1b2;
 }
 
-.modal__agregar_hide {
-  display: none;
-}
-
 .modal__agregar {
   text-align: center;
   padding: 1em;
@@ -37,6 +33,17 @@
   padding: 1em 2em;
   cursor: pointer;
   background: #00d1b2;
+  border: 0;
+  border-radius: 2px;
+  color: white;
+  font-size: 12px;
+  outline: 0;
+}
+
+.modal__agregar--disabled {
+  padding: 1em 2em;
+  cursor: pointer;
+  background: #BDBDBD;
   border: 0;
   border-radius: 2px;
   color: white;
