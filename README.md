@@ -8,4 +8,6 @@
 
 ## Tags
 
-1_simple_state : Reactjs with state.
+* 1_simple_state : Reactjs with state.
+
+* 2_react_redux : Reactjs with redux.
