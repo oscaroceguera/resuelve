@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import * as Actions from '../../reducers/tableReducer'
 
 import Wrapper from '../../components/commons/Wrapper'
 import Header from '../../components/Header/Header'
@@ -8,138 +12,51 @@ import Modal from '../../components/Modal/Modal'
 import ExtraButtons from '../../components/ExtraButtons/ExtraButtons'
 
 class TableContainer extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      isUpdate: false,
-      modalOpen: false,
-      currentConcepto: {
-        descripcion: '',
-        cantidad: '',
-        unidades: '',
-        precioUnit: ''
-      },
-      conceptos: []
-    }
-  }
-
   closeModal = (e) => {
-    return this.setState({
-      modalOpen: false
-    })
+    this.props.closeModalAction()
   }
 
   openModal = (e) => {
-    return this.setState({
-      modalOpen: true
-    })
+    this.props.openModalAction()
   }
 
   handleChange = (e) => {
-    const { currentConcepto } = this.state
     const inputName = e.target.name
     let value = e.target.value
-
-    currentConcepto[inputName] = value
-
-    return this.setState(currentConcepto)
+    this.props.listenFields(inputName, value)
   }
 
-  saveConcepto () {
-    const newState = Object.assign({}, this.state)
-    const _currentConcepto = this.state.currentConcepto
-    const _total = _currentConcepto.cantidad * _currentConcepto.precioUnit
-
-    _currentConcepto.total = _total.toFixed(2)
-
-    newState.conceptos.push(_currentConcepto)
-    newState.modalOpen = false
-
-    // inital state for currentConcepto
-    newState.currentConcepto = {
-      descripcion: '',
-      cantidad: '',
-      unidades: '',
-      precioUnit: ''
-    }
-
-    this.setState(newState)
-  }
-  updateConcepto () {
-    const newConceptos = Object.assign([], this.state.conceptos, {
-      [this.state.updateCurrentIndex]: {
-        descripcion: this.state.currentConcepto.descripcion,
-        cantidad: this.state.currentConcepto.cantidad,
-        unidades: this.state.currentConcepto.unidades,
-        precioUnit: this.state.currentConcepto.precioUnit,
-        total: (this.state.currentConcepto.cantidad * this.state.currentConcepto.precioUnit).toFixed(2)
-      }
-    })
-
-    const obj = {
-      isUpdate: false,
-      modalOpen: false,
-      conceptos: newConceptos,
-      currentConcepto: {
-        descripcion: '',
-        cantidad: '',
-        unidades: '',
-        precioUnit: ''
-      }
-    }
-    this.setState(obj)
-  }
-
-  addConcepto = (e) => {
+  onSaved = (e) => {
     e.preventDefault()
 
-    if (this.state.isUpdate) {
-      return this.updateConcepto()
+    if (this.props.isUpdate) {
+      return this.props.updateConceptoFanout()
     }
 
-    this.saveConcepto()
+    this.props.conceptoFanout()
   }
 
   deleteConcepto = (index) => (e) => {
     e.preventDefault()
 
-    const { conceptos } = this.state
-
-    this.setState({
-      conceptos: [...conceptos.slice(0, index), ...conceptos.slice(index + 1)]
-    })
+    this.props.deleteConcepto(index)
   }
 
   consoleLog = (e) => {
-    console.log(this.state.conceptos)
+    console.log(this.props.conceptos)
   }
 
   clearState = (e) => {
-    this.setState({
-      isUpdate: false,
-      modalOpen: false,
-      currentConcepto: {
-        descripcion: '',
-        cantidad: 0,
-        unidades: 0,
-        precioUnit: 0
-      },
-      conceptos: []
-    })
+    this.props.resetValues()
   }
 
   handleUpdateConcepto = (index) => (e) => {
     e.preventDefault()
-    this.setState({
-      updateCurrentIndex: index,
-      isUpdate: true,
-      currentConcepto: this.state.conceptos[index],
-      modalOpen: true
-    })
+    this.props.setConceptoToUpdate(index)
   }
 
   render () {
-    const { conceptos, modalOpen, currentConcepto} = this.state
+    const { modalOpen, conceptos, currentConcepto } = this.props
     return (
       <div>
         <Link to='/'>{'Home'}</Link>
@@ -160,11 +77,27 @@ class TableContainer extends Component {
           modalOpen={modalOpen}
           closeModal={this.closeModal}
           handleChange={this.handleChange}
-          addConcepto={this.addConcepto}
+          addConcepto={this.onSaved}
         />
       </div>
     )
   }
 }
 
-export default TableContainer;
+const mapStateToProps = (state) =>  {
+  const tableJS = state.tableReducer.toJS()
+  return {
+    modalOpen: tableJS.modalOpen,
+    conceptos: tableJS.conceptos,
+    currentConcepto: tableJS.currentConcepto,
+    isUpdate: tableJS.isUpdate,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    ...Actions
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableContainer)
