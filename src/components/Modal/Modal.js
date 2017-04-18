@@ -38,7 +38,7 @@ Modal.propTypes = {
   closeModal: React.PropTypes.func.isRequired,
   handleChange: React.PropTypes.func.isRequired,
   addConcepto: React.PropTypes.func.isRequired,
-  currentConcepto: React.PropTypes.object.isRequired
+  currentConcepto: React.PropTypes.object.isRequired,
 }
 
 export default Modal
